@@ -1,0 +1,26 @@
+body {
+  background-color: $main_bg;
+}
+.diss_sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 350px;
+  background-color: $sidebar_bg;
+  padding: 0 30px;
+  h1 {
+    color: $white;
+    font-family: "Lato";
+    > .badge {
+      background-color: $yellow;
+      font-size: 18px;
+    }
+  }
+}
+
+.btn_add {
+  font-size: 27px;
+  padding: 15px 0;
+  width: 100%;
+}

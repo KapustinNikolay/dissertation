@@ -1,0 +1,8 @@
+<nav class="col-xs-12 navbar navbar-default">
+    <ul class="nav navbar-nav navbar-right">
+        <li><a ui-sref="companies.edit">Добавить компанию</a></li>
+    </ul>
+</nav>
+
+<companies-item ng-repeat="company in $ctrl.list"
+item="company"></companies-item>

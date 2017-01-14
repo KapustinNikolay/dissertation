@@ -1,0 +1,50 @@
+/**
+ * Created by nik on 14.01.17.
+ */
+import passport from 'passport';
+import {Strategy} from 'passport-local';
+import crypto from 'crypto';
+import co from 'co';
+import Users from '../../models/Users';
+
+passport.use(new Strategy((login, password, callback) => {
+  co(function* () {
+    let user = yield Users.findOne({login}).lean();
+
+    if (user) {
+      if (user.password != hashPassword(password)) {
+        throw 'Неверный пароль';
+      }
+      return user;
+    } else {
+       user = yield Users.create(
+        {
+          login,
+          password: hashPassword(password)
+        });
+
+      return user;
+    }
+  })
+    .then(user => callback(null, user))
+    .catch(err => callback(null, false, {reason: err}));
+}));
+
+passport.serializeUser((user, callback) => {
+  callback(null, user._id);
+});
+
+
+passport.deserializeUser((id, callback) => {
+  Users
+    .findById(id)
+    .lean()
+    .then(user => callback(null, user))
+    .catch(callback);
+});
+
+function hashPassword(password) {
+  return crypto.createHash('sha512').update(password).digest("hex");
+}
+
+export default passport;

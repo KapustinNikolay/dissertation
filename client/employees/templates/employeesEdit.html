@@ -1,0 +1,35 @@
+<nav class="col-xs-12 navbar navbar-default">
+    <ul class="nav navbar-nav navbar-right">
+        <li><a ui-sref="employees.edit({company: $ctrl.employee.company, parent: $ctrl.$stateParams.id, id: undefined})">Добавить сотрудника</a></li>
+    </ul>
+</nav>
+<div class="col-xs-3">
+    <form>
+        <div class="form-group">
+            <label>Должность</label>
+            <input type="text" class="form-control" ng-model="$ctrl.employee.position">
+        </div>
+        <div class="form-group">
+            <label>Процесс</label>
+            <input type="text" class="form-control" ng-model="$ctrl.employee.process">
+        </div>
+        <div class="form-group">
+            <label>Функция</label>
+            <input type="text" class="form-control" ng-model="$ctrl.employee.function">
+        </div>
+        <div class="form-group">
+            <label>Подфункция</label>
+            <input type="text" class="form-control" ng-model="$ctrl.employee.subFunction">
+        </div>
+        <div class="form-group">
+            <label>Операция</label>
+            <input type="text" class="form-control" ng-model="$ctrl.employee.operation">
+        </div>
+        <button type="submit" class="btn btn-default" ng-click="$ctrl.save()">Сохранить</button>
+    </form>
+</div>
+<div class="col-xs-9">
+    <h2>Подчиненные</h2>
+    <employees-item ng-repeat="employee in $ctrl.employee.children"
+                    item="employee"></employees-item>
+</div>

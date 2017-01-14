@@ -1,0 +1,11 @@
+.companies-item {
+  padding: 15px;
+  > a {
+    display: block;
+    border: 1px solid black;
+    font-size: 18px;
+    text-transform: capitalize;
+    height: 150px;
+    padding: 30px;
+  }
+}

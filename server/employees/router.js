@@ -3,10 +3,11 @@
  */
 import express from 'express';
 import * as controllers from './controllers';
+import {checkEmployeeInUser} from '../common/middlewares';
 const router = express.Router();
 
-router.get('/:id', controllers.employeeGet);
+router.get('/:id', checkEmployeeInUser, controllers.employeeGet);
 router.post('/', controllers.employeeCreate);
-router.put('/:id', controllers.employeeUpdate);
+router.put('/:id', checkEmployeeInUser, controllers.employeeUpdate);
 
 export default router;

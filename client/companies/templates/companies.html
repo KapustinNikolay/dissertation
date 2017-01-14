@@ -1,8 +1,11 @@
-<nav class="col-xs-12 navbar navbar-default">
-    <ul class="nav navbar-nav navbar-right">
-        <li><a ui-sref="companies.edit">Добавить компанию</a></li>
-    </ul>
-</nav>
+<div class="diss_sidebar">
+    <h1>Орг. структуры <span class="badge">{{$ctrl.list.length}}</span></h1>
+    <button class="btn btn-warning btn_add helpers-margin-top-30" ng-click="$ctrl.openModal()">Добавить</button>
+</div>
 
-<companies-item ng-repeat="company in $ctrl.list"
-item="company"></companies-item>
+<div class="row helpers-padding-left-350">
+    <companies-item
+            ng-repeat="company in $ctrl.list"
+            item="company">
+    </companies-item>
+</div>

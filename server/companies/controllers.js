@@ -5,12 +5,14 @@ import * as lib from './lib';
 import wrap from 'co-express';
 
 export const companySave = wrap(function* (req, res) {
-  const company = yield lib.saveCompany(req.body);
-  res.json(company);
+  let company = req.body;
+  company.user = req.user._id;
+  const result = yield lib.saveCompany(company);
+  res.json(result);
 });
 
 export const getCompaniesList = wrap(function* (req, res) {
-  const companies = yield lib.getCompaniesList();
+  const companies = yield lib.getCompaniesList(req.user._id);
   res.json(companies);
 });
 

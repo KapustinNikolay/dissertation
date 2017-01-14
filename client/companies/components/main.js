@@ -5,7 +5,24 @@ import angular from 'angular';
 import template from '../templates/companies.html';
 
 class Controller {
-  constructor($timeout) {
+  constructor($uibModal, $state) {
+    angular.extend(this, {
+      $uibModal,
+      $state
+    });
+  }
+  
+  openModal() {
+    var modalInstance = this.$uibModal.open({
+      animation: true,
+      component: 'companiesModal'
+    });
+
+    modalInstance.result.then(() => {
+      this.$state.reload();
+    },() => {
+
+    });
   }
 }
 
@@ -14,5 +31,5 @@ angular.module('companies').component('companies', {
   bindings: {
     list: '<'
   },
-  controller: ['$timeout', Controller]
+  controller: ['$uibModal', '$state', Controller]
 });

@@ -4,14 +4,14 @@
 import Companies from  '../../models/Companies';
 import Employees from  '../../models/Employees';
 
-export function getCompaniesList() {
+export function getCompaniesList(user) {
   return Companies
-    .find({}, {name:1})
+    .find({user}, {name:1})
     .lean();
 }
 
 export function getCompany(id) {
-  let company = Companies.findById(id).lean();
+  let company = Companies.findById(id, {name: 1}).lean();
   let employees = Employees.find(
     {
       company: id,

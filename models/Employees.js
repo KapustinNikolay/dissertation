@@ -13,6 +13,11 @@ const userSchema = new mongoose.Schema({
     ref: 'Company',
     required: true
   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true
+  },
   position: {
     type: String,
     required: true

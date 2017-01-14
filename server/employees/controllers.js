@@ -5,7 +5,9 @@ import * as lib from './lib';
 import wrap from 'co-express';
 
 export const employeeCreate = wrap(function* (req, res) {
-  const result = yield lib.employeeCreate(req.body);
+  let employee = req.body;
+  employee.user = req.user._id;
+  const result = yield lib.employeeCreate(employee);
   res.json(result);
 });
 

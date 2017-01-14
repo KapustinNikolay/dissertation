@@ -3,7 +3,6 @@
  */
 import angular from 'angular';
 import template from '../templates/companiesItem.html';
-require('../styles/companiesItem.scss');
 
 angular.module('companies').component('companiesItem', {
   template,

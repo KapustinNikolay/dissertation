@@ -6,6 +6,7 @@ import angular from 'angular';
 angular.module('companies')
 .config(['$urlRouterProvider', '$stateProvider',
   function ($urlRouterProvider, $stateProvider) {
+    $urlRouterProvider.otherwise('/companies/list');
     $urlRouterProvider.when('/companies', '/companies/list');
 
     $stateProvider

@@ -4,10 +4,9 @@
 import angular from 'angular';
 
 class Controller {
-  constructor(companiesService, $state, $scope) {
+  constructor(companiesService, $scope) {
     angular.extend(this, {
       companiesService,
-      $state,
       $scope
     });
 
@@ -34,6 +33,7 @@ class Controller {
         if (this.m) {
           this.close();
         }
+        this.success();
       });
     }
   }
@@ -51,5 +51,5 @@ angular.module('companies').component('companiesForm', {
     close: '&',
     success: '&'
   },
-  controller: ['companiesService', '$state', '$scope',Controller]
+  controller: ['companiesService', '$scope',Controller]
 });

@@ -8,7 +8,6 @@ angular
   .service('employeesService', ['$resource', ($resource) => $resource('api/employees/:id',
     {id: '@_id'},
     {
-      create: {method: 'POST'},
-      update: {method: 'PUT'}
+      save: {method: 'POST'}
     })
   ]);

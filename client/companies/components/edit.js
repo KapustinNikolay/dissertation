@@ -3,21 +3,25 @@
  */
 import angular from 'angular';
 import template from '../templates/companiesEdit.html';
+import EmployeeModal from '../../common/classes/employeeModal';
 
-class Controller {
-  constructor(companiesService, $state, $stateParams) {
+class Controller extends EmployeeModal {
+  constructor(companiesService, employeesService, $uibModal, $state) {
+    super();
     angular.extend(this, {
       companiesService,
-      $state,
-      $stateParams
+      $uibModal,
+      employeesService,
+      $state
+    });
+  }
+  $onInit() {
+    this.company.$promise.then((company) => {
+      this.companyId = company._id;
     });
   }
   save() {
-    this.companiesService.save({id: this.$stateParams.id}, this.company, (res) => {
-      if (res.id) {
-        this.$state.go('companies.edit', {id: res._id});
-      }
-    });
+    alert('Сохранено');
   }
 }
 
@@ -26,5 +30,5 @@ angular.module('companies').component('companiesEdit', {
   bindings: {
     company: '<'
   },
-  controller: ['companiesService', '$state', '$stateParams', Controller]
+  controller: ['companiesService', 'employeesService', '$uibModal', '$state', Controller]
 });

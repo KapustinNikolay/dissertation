@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.get('/:id', checkEmployeeInUser, controllers.employeeGet);
 router.post('/', controllers.employeeCreate);
-router.put('/:id', checkEmployeeInUser, controllers.employeeUpdate);
+router.post('/:id', checkEmployeeInUser, controllers.employeeUpdate);
 
 export default router;

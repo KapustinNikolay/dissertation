@@ -3,29 +3,27 @@
  */
 import angular from 'angular';
 import template from '../templates/employeesEdit.html';
-import _ from 'lodash';
+import EmployeeModal from '../../common/classes/employeeModal';
 
-class Controller {
-  constructor(employeesService, $state, $stateParams) {
+
+class Controller extends EmployeeModal {
+  constructor(employeesService, $state, $stateParams, $uibModal) {
+    super();
     angular.extend(this, {
       employeesService,
       $state,
-      $stateParams
+      $stateParams,
+      $uibModal
+    });
+  }
+  $onInit() {
+    this.employee.$promise.then((employee) => {
+      this.parent = employee._id;
+      this.companyId = employee.company;
     });
   }
   save() {
-    if (this.$stateParams.id) {
-      this.employeesService.update({id: this.$stateParams.id}, this.employee, (res) => {
-        alert('ok');
-      });
-    } else {
-      let employee = this.employee;
-      _.merge(employee, this.$stateParams);
-      this.employeesService.create({}, employee, (res) => {
-        this.$state.go('employees.edit', {id: res._id});
-      });
-    }
-
+    alert('Сохранено');
   }
 }
 
@@ -34,5 +32,5 @@ angular.module('employees').component('employeesEdit', {
   bindings: {
     employee: '<'
   },
-  controller: ['employeesService', '$state', '$stateParams', Controller]
+  controller: ['employeesService', '$state', '$stateParams', '$uibModal', Controller]
 });

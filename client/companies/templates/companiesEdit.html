@@ -2,6 +2,8 @@
     <h1>Орг. структура</h1>
     <companies-form m='$ctrl.m' success="$ctrl.save()" company="$ctrl.company"></companies-form>
     <button class="btn btn-warning btn_add helpers-margin-top-30" ng-click="$ctrl.openModal()">Добавить</button>
+
+    <employees-tree company="$ctrl.company._id" ng-if="$ctrl.company._id"></employees-tree>
 </div>
 
 

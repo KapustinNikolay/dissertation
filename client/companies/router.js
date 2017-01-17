@@ -29,7 +29,7 @@ angular.module('companies')
         resolve: {
           company: ['companiesService', '$stateParams', (companiesService, $stateParams) => {
             const id = $stateParams.id;
-            return id ? companiesService.get({id: id}) : {};
+            return id ? companiesService.get({id: id}).$promise : {};
           }]
         }
       });

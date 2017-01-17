@@ -10,6 +10,7 @@ import 'tv4';
 import 'objectpath';
 import schemaForm from 'angular-schema-form';
 import 'script!angular-schema-form-bootstrap';
+
 import './companies';
 import './employees'
 import './common';

@@ -1,6 +1,8 @@
 /**
  * Created by nik on 14.01.17.
  */
+import co from 'co';
+import _ from 'lodash';
 import Employees from  '../../models/Employees';
 
 export function employeeCreate(employee) {
@@ -30,3 +32,11 @@ export function employeeUpdate(_id, data) {
     {$set: data}
   );
 }
+
+export const getTree = co.wrap(function* (company) {
+  let employees = yield Employees.find({company}).lean();
+  employees = _.groupBy(employees, 'parent');
+  console.log(employees)
+
+  return {};
+});

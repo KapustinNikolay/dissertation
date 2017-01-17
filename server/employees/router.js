@@ -3,9 +3,10 @@
  */
 import express from 'express';
 import * as controllers from './controllers';
-import {checkEmployeeInUser} from '../common/middlewares';
+import {checkEmployeeInUser, checkCompanyInUser} from '../common/middlewares';
 const router = express.Router();
 
+router.get('/:id/tree', checkCompanyInUser, controllers.getTree);
 router.get('/:id', checkEmployeeInUser, controllers.employeeGet);
 router.post('/', controllers.employeeCreate);
 router.post('/:id', checkEmployeeInUser, controllers.employeeUpdate);

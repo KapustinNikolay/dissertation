@@ -60,6 +60,7 @@ export const getTree = co.wrap(function* (companyId) {
       return {
         _id: i._id,
         name: i.position,
+        parent: i.parent,
         title: 'сотрудник'
       }
     });

@@ -18,3 +18,21 @@
     }
   }
 }
+
+.node {
+  .employee-add-btn {
+    position: absolute;
+    cursor: pointer;
+    top: -2px;
+    right: -3px;
+    font-size: 20px;
+    color: $sidebar_bg;
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  &:hover {
+    .employee-add-btn {
+      opacity: 1;
+    }
+  }
+}

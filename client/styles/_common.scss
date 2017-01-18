@@ -3,6 +3,7 @@ body {
 }
 .diss_sidebar {
   position: fixed;
+  z-index: 1000000;
   left: 0;
   top: 0;
   bottom: 0;
@@ -23,4 +24,11 @@ body {
   font-size: 27px;
   padding: 15px 0;
   width: 100%;
+}
+org-chart {
+  display: block;
+  text-align: center;
+}
+.orgchart {
+  background-image: none;
 }

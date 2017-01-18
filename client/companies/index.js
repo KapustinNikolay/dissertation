@@ -13,5 +13,3 @@ require('./components/edit');
 require('./components/item');
 require('./components/form');
 require('./components/modal');
-
-require('./directives/ogrChart');

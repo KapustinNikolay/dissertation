@@ -18,7 +18,6 @@ export const checkCompanyInUser = wrap(function* (req, res, next) {
 });
 
 export const checkEmployeeInUser = wrap(function* (req, res, next) {
-  console.log(req.params)
   const employee = yield Employees.findOne(
     {
       user: req.user._id,

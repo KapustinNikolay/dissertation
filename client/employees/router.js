@@ -18,7 +18,7 @@ angular.module('employees')
           resolve: {
             employee: ['employeesService','$stateParams', (employeesService, $stateParams) => {
               const {id} = $stateParams;
-              return id ? employeesService.get({id}) : {};
+              return id ? employeesService.get({id}).$promise : {};
             }]
           }
         });

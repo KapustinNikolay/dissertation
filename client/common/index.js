@@ -6,3 +6,4 @@ import angular from 'angular';
 angular.module('common', ['ui.bootstrap']);
 
 require('./components/navigation');
+require('./directives/ogrChart');

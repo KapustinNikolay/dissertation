@@ -23,6 +23,7 @@ if (process.env.NODE_ENV == 'development') {
 } else {
   router.use('/', express.static(path.join(__dirname, '../dist')));
 }
+router.use('/static', express.static(path.join(__dirname, '../static')));
 
 router.use(cookieParser());
 router.use(bodyParser.urlencoded({

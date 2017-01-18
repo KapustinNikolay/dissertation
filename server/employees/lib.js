@@ -3,28 +3,31 @@
  */
 import co from 'co';
 import _ from 'lodash';
+import makeOrgTree from '../common/makeOrgTree';
 import Employees from  '../../models/Employees';
 
 export function employeeCreate(employee) {
   return Employees.create(employee);
 }
 
-export function employeeGet(id) {
-  let employee = Employees.findById(id).lean();
-  let children = Employees.find(
-    {
-      parent: id
-    },
-    {position: 1}
-  ).lean();
+export const employeeGet = co.wrap(function* (id) {
+  let employee = yield Employees.findById(id).lean();
 
-  return Promise.all([employee, children])
-    .then(result => {
-      let employee = result[0];
-      employee.children = result[1];
-      return employee;
-    });
-}
+  let children = yield Employees.find(
+    {
+      company: employee.company
+    })
+    .lean();
+
+  children = _.groupBy(children, 'parent');
+
+  employee.title = 'сотрудник';
+  employee.name = employee.position;
+
+  makeOrgTree(children, employee, children[employee._id]);
+
+  return employee;
+});
 
 export function employeeUpdate(_id, data) {
   return Employees.update(

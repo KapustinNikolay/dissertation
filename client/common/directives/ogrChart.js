@@ -9,14 +9,17 @@ function dir($state, $uibModal) {
     scope: {
       data: '='
     },
-    template: '<div id="orgChart"></div>',
+    template: '<div></div>',
     link: function (scope, element) {
-      const company = scope.data._id;
+      const company = scope.data.company || scope.data._id;
+
+      console.log(scope.data);
 
       $(element).orgchart({
         'data' : scope.data,
         'nodeContent': 'title',
-        'toggleSiblingsResp': true,
+        'pan': true,
+        'direction': 'l2r',
         createNode: ($node, data) => {
 
           if (data._id != company) {
@@ -29,7 +32,6 @@ function dir($state, $uibModal) {
             'class': 'fa fa-plus employee-add-btn',
             click: function(e) {
               e.stopPropagation();
-
               var modalInstance = $uibModal.open({
                 animation: true,
                 component: 'employeesModal',
@@ -42,7 +44,6 @@ function dir($state, $uibModal) {
                   }
                 }
               });
-
               modalInstance.result.then(() => {
                 $state.reload();
               },() => {});
@@ -56,4 +57,4 @@ function dir($state, $uibModal) {
   }
 }
 
-angular.module('companies').directive('orgChart', ['$state',  '$uibModal', dir]);
+angular.module('common').directive('orgChart', ['$state',  '$uibModal', dir]);

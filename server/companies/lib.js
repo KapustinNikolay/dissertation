@@ -3,6 +3,7 @@
  */
 import _ from 'lodash';
 import co from 'co';
+import makeOrgTree from '../common/makeOrgTree';
 import Companies from  '../../models/Companies';
 import Employees from  '../../models/Employees';
 
@@ -53,24 +54,7 @@ export const getTree = co.wrap(function* (companyId) {
 
   company.title = 'Орг структура';
 
-  function rec(parent, arr) {
-    if (!arr || !arr.length) return;
-
-    parent.children = arr.map(i => {
-      return {
-        _id: i._id,
-        name: i.position,
-        parent: i.parent,
-        title: 'сотрудник'
-      }
-    });
-
-    parent.children.forEach(i => {
-      rec(i, employees[i._id]);
-    });
-  }
-
-  rec(company, employees[undefined]);
+  makeOrgTree(employees, company, employees[undefined]);
 
   return company;
 });

@@ -6,7 +6,6 @@ import * as controllers from './controllers';
 import {checkEmployeeInUser, checkCompanyInUser} from '../common/middlewares';
 const router = express.Router();
 
-router.get('/:id/tree', checkCompanyInUser, controllers.getTree);
 router.get('/:id', checkEmployeeInUser, controllers.employeeGet);
 router.post('/', controllers.employeeCreate);
 router.post('/:id', checkEmployeeInUser, controllers.employeeUpdate);

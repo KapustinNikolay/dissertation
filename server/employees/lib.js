@@ -32,11 +32,3 @@ export function employeeUpdate(_id, data) {
     {$set: data}
   );
 }
-
-export const getTree = co.wrap(function* (company) {
-  let employees = yield Employees.find({company}).lean();
-  employees = _.groupBy(employees, 'parent');
-  console.log(employees)
-
-  return {};
-});

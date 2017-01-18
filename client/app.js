@@ -1,4 +1,7 @@
-import 'jquery';
+window.jQuery = window.$ = require('jquery');
+import 'font-awesome/css/font-awesome.css';
+import 'orgchart';
+import 'orgchart/dist/css/jquery.orgchart.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';

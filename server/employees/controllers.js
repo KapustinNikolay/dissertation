@@ -20,8 +20,3 @@ export const employeeUpdate = wrap(function* (req, res) {
   const r = yield lib.employeeUpdate(req.params.id, req.body);
   res.json({});
 });
-
-export const getTree = wrap(function* (req, res) {
-  const tree = yield lib.getTree(req.params.id);
-  res.json(tree);
-});

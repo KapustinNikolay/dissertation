@@ -5,9 +5,13 @@ import angular from 'angular';
 
 angular
   .module('companies')
-  .service('companiesService', ['$resource', ($resource) => $resource('api/companies/:id',
-    {id: '@_id'},
+  .service('companiesService', ['$resource', ($resource) => $resource('api/companies/:id/:action',
+    {id: '@_id', action: '@action'},
     {
-      save: {method: 'POST'}
+      save: {method: 'POST'},
+      getTree: {
+        method: 'GET',
+        params: {action: 'tree'}
+      }
     })
   ]);

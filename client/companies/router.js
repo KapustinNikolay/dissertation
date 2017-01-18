@@ -25,11 +25,15 @@ angular.module('companies')
       })
       .state('companies.edit', {
         url: '/update?id',
-        template: '<companies-edit company="$resolve.company"></companies-edit>',
+        template: '<companies-edit company="$resolve.company" org-chart="$resolve.orgChart"></companies-edit>',
         resolve: {
           company: ['companiesService', '$stateParams', (companiesService, $stateParams) => {
             const id = $stateParams.id;
             return id ? companiesService.get({id: id}).$promise : {};
+          }],
+          orgChart: ['companiesService', '$stateParams', (companiesService, $stateParams) => {
+            const id = $stateParams.id;
+            return id ? companiesService.getTree({id: id}).$promise : {};
           }]
         }
       });

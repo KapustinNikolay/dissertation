@@ -1,6 +1,8 @@
 /**
  * Created by nik on 14.01.17.
  */
+import _ from 'lodash';
+import co from 'co';
 import Companies from  '../../models/Companies';
 import Employees from  '../../models/Employees';
 
@@ -43,3 +45,31 @@ export function updateCompany(_id, company) {
     }
   );
 }
+
+export const getTree = co.wrap(function* (companyId) {
+  let company = yield Companies.findById(companyId, {name: 1}).lean();
+  let employees = yield Employees.find({company: companyId}).lean();
+  employees = _.groupBy(employees, 'parent');
+
+  company.title = 'Орг структура';
+
+  function rec(parent, arr) {
+    if (!arr || !arr.length) return;
+
+    parent.children = arr.map(i => {
+      return {
+        _id: i._id,
+        name: i.position,
+        title: 'сотрудник'
+      }
+    });
+
+    parent.children.forEach(i => {
+      rec(i, employees[i._id]);
+    });
+  }
+
+  rec(company, employees[undefined]);
+
+  return company;
+});

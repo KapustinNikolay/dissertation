@@ -7,6 +7,7 @@ import * as controllers from './controllers';
 const router = express.Router();
 
 router.get('/', controllers.getCompaniesList);
+router.get('/:id/tree', checkCompanyInUser, controllers.getTree);
 router.get('/:id', checkCompanyInUser, controllers.getCompany);
 router.post('/', controllers.companySave);
 router.post('/:id', checkCompanyInUser, controllers.companyUpdate);

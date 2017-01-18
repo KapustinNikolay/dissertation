@@ -28,7 +28,8 @@ class Controller extends EmployeeModal {
 angular.module('companies').component('companiesEdit', {
   template,
   bindings: {
-    company: '<'
+    company: '<',
+    orgChart: '<'
   },
   controller: ['companiesService', 'employeesService', '$uibModal', '$state', Controller]
 });

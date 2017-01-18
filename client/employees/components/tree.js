@@ -39,22 +39,7 @@ class Controller {
       ]},
       { "name" : "Albert", "age" : "33", "children" : [] },
       { "name" : "Ron", "age" : "29", "children" : [] }
-    ]
-    this.treeOptions = {
-      nodeChildren: "children",
-      dirSelectable: true,
-      multiSelection: true,
-      injectClasses: {
-        ul: "a1",
-        li: "a2",
-        liSelected: "a7",
-        iExpanded: "a3",
-        iCollapsed: "a4",
-        iLeaf: "a5",
-        label: "a6",
-        labelSelected: "a8"
-      }
-    }
+    ];
   }
   $onInit() {
     this.employeesService.getTree({id: this.company}, (res) => {

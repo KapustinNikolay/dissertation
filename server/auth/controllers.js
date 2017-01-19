@@ -22,7 +22,6 @@ export function login(req, res) {
       }
 
       if (!user) {
-        console.log(info)
         return res.render('login', info);
       }
 
@@ -36,5 +35,3 @@ export function login(req, res) {
     }
   )(req, res);
 }
-
-//https://api.telegram.org/bot125960387:AAFJRvpRE5SxI3r9Ud8BLNuakIBzFYYA1vs/sendMessage?chat_id=-1001096807484&text=kudax

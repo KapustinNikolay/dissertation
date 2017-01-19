@@ -13,9 +13,10 @@ class Controller {
 
     this.schema = {
       type: 'object',
-      required: ['position'],
+      required: ['name', 'type'],
       properties: {
-        position: {type: 'string', minLength:1 },
+        name: {type: 'string', minLength:1 },
+        type: {type: 'string', enum:['department', 'employee']},
         process: {type: 'string', minLength:1 },
         function: {type: 'string', minLength:1 },
         subFunction: {type: 'string', minLength:1 },
@@ -25,24 +26,39 @@ class Controller {
 
     this.form = [
       {
-        key: 'position',
-        title: 'Должность'
+        key: 'name',
+        title: 'Имя'
       },
       {
-        key: 'process',
-        title: 'Процесс'
+        key: 'type',
+        title: 'Тип орг. единицы',
+        type: "select",
+        titleMap: {
+          "department": "Отдел",
+          "employee": "Сотрудник"
+        }
       },
       {
-        key: 'function',
-        title: 'Функция'
-      },
-      {
-        key: 'subFunction',
-        title: 'Подфункция'
-      },
-      {
-        key: 'operation',
-        title: 'Операция'
+        type: "fieldset",
+        condition: "model.type == 'employee'",
+        items: [
+          {
+            key: 'process',
+            title: 'Процесс'
+          },
+          {
+            key: 'function',
+            title: 'Функция'
+          },
+          {
+            key: 'subFunction',
+            title: 'Подфункция'
+          },
+          {
+            key: 'operation',
+            title: 'Операция'
+          }
+        ]
       }
     ];
   }

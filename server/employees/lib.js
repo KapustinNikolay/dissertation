@@ -22,7 +22,6 @@ export const employeeGet = co.wrap(function* (id) {
   children = _.groupBy(children, 'parent');
 
   employee.title = 'сотрудник';
-  employee.name = employee.position;
 
   makeOrgTree(children, employee, children[employee._id]);
 

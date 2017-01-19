@@ -18,8 +18,13 @@ const userSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  position: {
+  name: {
     type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    enum:['department', 'employee'],
     required: true
   },
   process: {

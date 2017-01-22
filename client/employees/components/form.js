@@ -16,11 +16,25 @@ class Controller {
       required: ['name', 'type'],
       properties: {
         name: {type: 'string', minLength:1 },
-        type: {type: 'string', enum:['department', 'employee']},
-        process: {type: 'string', minLength:1 },
-        function: {type: 'string', minLength:1 },
-        subFunction: {type: 'string', minLength:1 },
-        operation: {type: 'string', minLength:1 }
+        type: {type: 'string', enum:[ 'department', 'employee']},
+        actions: {
+          type: 'array',
+          items: {
+            type: 'object',
+            required: ['type', 'name', 'v'],
+            properties: {
+              type: {type: 'string', enum: [
+                'process',
+                'function',
+                'subFunction',
+                'operation'
+              ]},
+              name: {type: 'string'},
+              t: {type: 'integer'},
+              v: {type: 'integer'}
+            }
+          }
+        }
       }
     };
 
@@ -39,26 +53,35 @@ class Controller {
         }
       },
       {
-        type: "fieldset",
-        condition: "model.type == 'employee'",
+        key: 'actions',
+        title: 'Действия',
+        add: 'Добавить действие',
         items: [
           {
-            key: 'process',
-            title: 'Процесс'
+            title: 'Тип',
+            key: 'actions[].type',
+            titleMap: {
+              "process": "Процесс",
+              "function": "Функция",
+              "subFunction": "Подфункция",
+              "operation": "Операция"
+            }
           },
           {
-            key: 'function',
-            title: 'Функция'
+            title: 'Название',
+            key: 'actions[].name'
           },
           {
-            key: 'subFunction',
-            title: 'Подфункция'
+            title: 'Переодичность',
+            key: 'actions[].v'
           },
           {
-            key: 'operation',
-            title: 'Операция'
-          }
-        ]
+            title: 'Время',
+            key: 'actions[].t',
+            condition: "model.actions[arrayIndex].type == 'operation'"
+          },
+        ],
+        condition: "model.type == 'employee'"
       }
     ];
   }

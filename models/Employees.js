@@ -24,21 +24,33 @@ const userSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum:['department', 'employee'],
+    enum: ['department', 'employee'],
     required: true
   },
-  process: {
-    type: String
-  },
-  function: {
-    type: String
-  },
-  subFunction: {
-    type: String
-  },
-  operation: {
-    type: String
-  }
+  actions: [
+    {
+      type: {
+        type: String,
+        required: true,
+        enum: [
+          'process',
+          'function',
+          'subFunction',
+          'operation']
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      v: {
+        type: Number,
+        required: true,
+      },
+      t: {
+        type: Number
+      }
+    }
+  ]
 });
 
 const model = mongoose.model('Employee', userSchema);

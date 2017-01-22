@@ -21,18 +21,18 @@ class Controller {
           type: 'array',
           items: {
             type: 'object',
-            required: ['type', 'name', 'v'],
             properties: {
-              type: {type: 'string', enum: [
+              type: {type: 'string', default: 'process', enum: [
                 'process',
                 'function',
                 'subFunction',
                 'operation'
               ]},
-              name: {type: 'string'},
-              t: {type: 'integer'},
-              v: {type: 'integer'}
-            }
+              name: {type: 'string', default: ''},
+              t: {type: 'integer', default: 0},
+              v: {type: 'integer', default: 1}
+            },
+            required: ['type', 'name', 'v']
           }
         }
       }
@@ -56,6 +56,7 @@ class Controller {
         key: 'actions',
         title: 'Действия',
         add: 'Добавить действие',
+        condition: "model.type == 'employee'",
         items: [
           {
             title: 'Тип',
@@ -81,13 +82,14 @@ class Controller {
             condition: "model.actions[arrayIndex].type == 'operation'"
           },
         ],
-        condition: "model.type == 'employee'"
+
       }
     ];
   }
 
   save() {
     this.$scope.$broadcast('schemaFormValidate');
+    console.log(this.$scope.form.$error)
     if (this.$scope.form.$valid) {
       let employee = _.merge(this.employee, this.resolve && this.resolve.additional || {});
       this.employeesService.save(employee, (res) => {

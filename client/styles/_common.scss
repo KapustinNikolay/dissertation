@@ -3,9 +3,9 @@ body {
 }
 .diss_sidebar {
   position: fixed;
-  z-index: 1000000;
+  z-index: 1000;
   left: 0;
-  top: 0;
+  top: 52px;
   bottom: 0;
   width: 350px;
   background-color: $sidebar_bg;
@@ -29,4 +29,23 @@ body {
 
 .orgchart {
   background-image: none;
+}
+
+.list-remove-btn {
+  float: right;
+  font-size: 20px;
+  font-weight: 100;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.alerts-container {
+  width: 100%;
+  position: fixed;
+  top: 15px;
+  z-index: 1000;
+  .alerts {
+    width: 500px;
+    margin: 0 auto;
+  }
 }

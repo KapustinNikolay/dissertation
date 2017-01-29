@@ -27,28 +27,56 @@ const userSchema = new mongoose.Schema({
     enum: ['department', 'employee'],
     required: true
   },
-  actions: [
+  processes: [
     {
-      type: {
-        type: String,
-        required: true,
-        enum: [
-          'process',
-          'function',
-          'subFunction',
-          'operation']
-      },
       name: {
         type: String,
-        required: true,
+        required: true
       },
       v: {
-        type: Number,
-        required: true,
-      },
-      t: {
         type: Number
-      }
+      },
+      functions: [
+        {
+          name: {
+            type: String,
+            required: true
+          },
+          v: {
+            type: Number
+          },
+          actions: [
+            {
+              name: {
+                type: String,
+                required: true
+              },
+              v: {
+                type: Number
+              },
+              t: {
+                type: Number
+              },
+              type: {
+                type: String,
+                enum: ['operation', 'subFunction'],
+                required: true
+              },
+              operations: [
+                {
+                  name: {
+                    type: String,
+                    required: true
+                  },
+                  t: {
+                    type: Number
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 });

@@ -19,20 +19,23 @@
   }
 }
 
-.node {
-  .employee-add-btn {
-    position: absolute;
-    cursor: pointer;
-    bottom: -7px;
-    left: -3px;
-    font-size: 20px;
-    color: $sidebar_bg;
-    opacity: 0;
-    transition: opacity .3s;
-  }
-  &:hover {
+.orgchart-container {
+  text-align: center;
+  .node {
     .employee-add-btn {
-      opacity: 1;
+      position: absolute;
+      cursor: pointer;
+      top: -7px;
+      right: -3px;
+      font-size: 20px;
+      color: $sidebar_bg;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    &:hover {
+      .employee-add-btn {
+        opacity: 1;
+      }
     }
   }
 }

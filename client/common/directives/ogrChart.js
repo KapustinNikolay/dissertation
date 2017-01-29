@@ -13,13 +13,11 @@ function dir($state, $uibModal) {
     link: function (scope, element) {
       const company = scope.data.company || scope.data._id;
 
-      console.log(scope.data);
-
       $(element).orgchart({
         'data' : scope.data,
         'nodeContent': 'title',
         'pan': true,
-        'direction': 'l2r',
+        'direction': 't2b',
         createNode: ($node, data) => {
 
           if (data._id != company) {
@@ -39,7 +37,7 @@ function dir($state, $uibModal) {
                   additional: () => {
                     return {
                       company: company,
-                      parent: scope.data._id != data._id ?  data._id : undefined
+                      parent: company != data._id ?  data._id : undefined
                     }
                   }
                 }

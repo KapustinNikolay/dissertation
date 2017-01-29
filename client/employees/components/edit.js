@@ -6,8 +6,11 @@ import template from '../templates/employeesEdit.html';
 
 
 class Controller {
+  constructor(alertsService) {
+    this.alertsService = alertsService;
+  }
   save() {
-    alert('Сохранено');
+    this.alertsService.add('Сохранено успешно');
   }
 }
 
@@ -16,5 +19,5 @@ angular.module('employees').component('employeesEdit', {
   bindings: {
     employee: '<'
   },
-  controller: [Controller]
+  controller: ['alertsService', Controller]
 });

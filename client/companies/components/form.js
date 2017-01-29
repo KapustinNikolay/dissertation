@@ -51,5 +51,5 @@ angular.module('companies').component('companiesForm', {
     close: '&',
     success: '&'
   },
-  controller: ['companiesService', '$scope',Controller]
+  controller: ['companiesService', '$scope', Controller]
 });

@@ -5,8 +5,12 @@ import angular from 'angular';
 import template from '../templates/companiesEdit.html';
 
 class Controller {
+  constructor(alertsService) {
+    this.alertsService = alertsService;
+  }
+
   save() {
-    alert('Сохранено');
+    this.alertsService.add('Сохранено успешно');
   }
 }
 
@@ -16,5 +20,5 @@ angular.module('companies').component('companiesEdit', {
     company: '<',
     orgChart: '<'
   },
-  controller: [Controller]
+  controller: ['alertsService', Controller]
 });

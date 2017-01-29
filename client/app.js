@@ -13,19 +13,29 @@ import 'tv4';
 import 'objectpath';
 import schemaForm from 'angular-schema-form';
 import 'script!angular-schema-form-bootstrap';
+import 'angular-loading-bar';
+import 'angular-animate';
 
 import './companies';
 import './employees'
 import './common';
 
+require('angular-loading-bar/build/loading-bar.css');
 require('./styles/index.scss');
+
 
 angular.module('myApp', [
   uiRouter,
   ngResource,
   uiBootstrap,
   schemaForm.name,
+  'ngAnimate',
+  'angular-loading-bar',
   'companies',
   'employees',
   'common'
-]);
+])
+  .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeBar = true;
+    cfpLoadingBarProvider.includeSpinner = true;
+  }]);

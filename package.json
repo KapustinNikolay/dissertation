@@ -37,6 +37,8 @@
   },
   "dependencies": {
     "angular": "^1.6.1",
+    "angular-animate": "^1.6.1",
+    "angular-loading-bar": "^0.9.0",
     "angular-resource": "^1.6.1",
     "angular-sanitize": "^1.6.1",
     "angular-schema-form": "^0.8.13",
@@ -56,6 +58,7 @@
     "jquery": "^3.1.1",
     "lodash": "^4.17.4",
     "mongoose": "^4.7.6",
+    "node-sass": "^4.4.0",
     "objectpath": "^1.2.1",
     "orgchart": "^1.3.4",
     "passport": "^0.3.2",

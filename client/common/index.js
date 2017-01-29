@@ -6,4 +6,7 @@ import angular from 'angular';
 angular.module('common', ['ui.bootstrap']);
 
 require('./components/navigation');
+require('./components/alerts');
 require('./directives/ogrChart');
+
+require('./interseptors/error');

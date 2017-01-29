@@ -29,8 +29,14 @@ export const employeeGet = co.wrap(function* (id) {
 });
 
 export function employeeUpdate(_id, data) {
+  let update = {$set: data};
+
+  if (data.type == "department") {
+    delete data.processes;
+    update.$unset = {processes: '1'};
+  }
   return Employees.update(
     {_id},
-    {$set: data}
+    update
   );
 }

@@ -68,6 +68,9 @@ const userSchema = new mongoose.Schema({
                     type: String,
                     required: true
                   },
+                  v: {
+                    type: Number
+                  },
                   t: {
                     type: Number
                   }

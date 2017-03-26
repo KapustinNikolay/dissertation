@@ -19,6 +19,7 @@ import 'angular-animate';
 import './companies';
 import './employees'
 import './common';
+import './calculations';
 
 require('angular-loading-bar/build/loading-bar.css');
 require('./styles/index.scss');
@@ -33,7 +34,8 @@ angular.module('myApp', [
   'angular-loading-bar',
   'companies',
   'employees',
-  'common'
+  'common',
+  'calculations'
 ])
   .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeBar = true;

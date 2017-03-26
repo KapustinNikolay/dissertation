@@ -1,0 +1,63 @@
+<div class="container-fluid">
+    <h2>1 метод</h2>
+    <div class="row">
+        <div class="col-xs-7">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Системная сложность Со</th>
+                    <th>Собственная сложность Сс</th>
+                    <th>Внутренняя сложность Св</th>
+                    <th>Степень централизации a</th>
+                    <th>Коэффициент использования b</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="i in $ctrl.structureAnalysis">
+                    <td>{{i.name}}</td>
+                    <td>{{i.Co}}</td>
+                    <td>{{i.Cc}}</td>
+                    <td>{{i.Cb}}</td>
+                    <td>{{i.a}}</td>
+                    <td>{{i.b}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <strong class="pull-right">Самый оптимальный вариант: {{$ctrl.structureAnalysisRec.name}}</strong>
+        </div>
+    </div>
+
+    <h2>2 метод</h2>
+    <div class="row">
+        <div class="col-xs-10">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Лямбда</th>
+                    <th>Мю</th>
+                    <th>P</th>
+                    <th>L сист</th>
+                    <th>W сист</th>
+                    <th>L оч</th>
+                    <th>W оч</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="i in $ctrl.smoAnalysis">
+                    <td>{{i.name}}</td>
+                    <td>{{i.Lb}}</td>
+                    <td>{{i.My}}</td>
+                    <td>{{i.P}}</td>
+                    <td>{{i.Lsis}}</td>
+                    <td>{{i.Wsis}}</td>
+                    <td>{{i.Loch}}</td>
+                    <td>{{i.Woch}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <strong class="pull-right">Самый оптимальный вариант: ????</strong>
+        </div>
+    </div>
+</div>

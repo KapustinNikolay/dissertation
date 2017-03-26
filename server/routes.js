@@ -14,6 +14,7 @@ import webpackConf from '../config/webpack.dev';
 import auth from './auth/routes';
 import companies from './companies/router';
 import employees from './employees/router';
+import calculation from './calculation/router';
 
 const router = express.Router();
 const SessionStore = sessionStore(session);
@@ -47,6 +48,7 @@ router.use(session({
 router.use(auth);
 router.use('/api/companies', companies);
 router.use('/api/employees', employees);
+router.use('/api/calculations', calculation);
 
 router.get('/', (req, res) => {
   res.render('index');

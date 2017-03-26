@@ -25,61 +25,91 @@
         <ul class="list-group list-group-item form-group"
             ng-if="$ctrl.employee.type == 'employee'"
             ng-init="$ctrl.employee.processes = $ctrl.employee.processes || []">
-            <label  class="col-xs-12">Процессы</label>
+            <label class="col-xs-12 text-warning">Процессы</label>
             <li class="list-group-item col-xs-12"
                 ng-repeat="process in $ctrl.employee.processes track by $index"
                 ng-init="process.functions = process.functions || []">
 
-                <div class="form-inline">
-                    <label>Название процесса</label>
-                    <input class="form-control" type="text" ng-model="process.name">
-                    <label >Периодичность :</label>
-                    <input class="form-control" type="number" ng-model="process.v">
-                    <span class="glyphicon glyphicon-remove list-remove-btn" ng-click="$ctrl.removeFromArray($ctrl.employee.processes, $index)"></span>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="glyphicon glyphicon-remove list-remove-btn" ng-click="$ctrl.removeFromArray($ctrl.employee.processes, $index)"></span>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>Название процесса</label>
+                        <input class="form-control" type="text" ng-model="process.name">
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label >Периодичность</label>
+                        <input class="form-control" type="number" ng-model="process.v">
+                    </div>
                 </div>
+
                 <ul class="form-group list-group">
-                    <label>Функции</label>
+                    <label class="text-warning">Функции</label>
                     <li class="list-group-item"
                         ng-repeat="function in process.functions track by $index"
                         ng-init="function.actions = function.actions || []">
 
-                        <div class="form-inline">
-                            <label>Название функции</label>
-                            <input class="form-control" type="text" ng-model="function.name">
-                            <label >Периодичность :</label>
-                            <input class="form-control" type="number" ng-model="function.v">
-                            <span class="glyphicon glyphicon-remove list-remove-btn" ng-click="$ctrl.removeFromArray(process.functions, $index)"></span>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <span class="glyphicon glyphicon-remove list-remove-btn" ng-click="$ctrl.removeFromArray(process.functions, $index)"></span>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Название функции</label>
+                                <input class="form-control" type="text" ng-model="function.name">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label >Периодичность</label>
+                                <input class="form-control" type="number" ng-model="function.v">
+                            </div>
                         </div>
 
                         <ul class="list-group">
-                            <label >Подфункции и операции</label>
+                            <label class="text-warning">Подфункции и операции</label>
                             <li class="list-group-item"
                                 ng-repeat="action in function.actions track by $index">
 
-                                <div class="form-inline">
-                                    <label>Название {{action.type == 'subFunction' ? 'подфункции :' : 'операции :'}}</label>
-                                    <input class="form-control" type="text" ng-model="action.name">
-                                    <div ng-if="action.type == 'operation'" style="display: inline-block;">
-                                        <label>Время выполнения :</label>
-                                        <input class="form-control" type="number" ng-model="action.t">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <span class="glyphicon glyphicon-remove list-remove-btn" ng-click="$ctrl.removeFromArray(function.actions, $index)"></span>
                                     </div>
-                                    <div ng-if="action.type == 'subFunction'" style="display: inline-block;">
-                                        <label >Периодичность :</label>
+                                    <div class="form-group col-sm-4">
+                                        <label>Название {{action.type == 'subFunction' ? 'подфункции' : 'операции'}}</label>
+                                        <input class="form-control" type="text" ng-model="action.name">
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label>Периодичность</label>
                                         <input class="form-control" type="number" ng-model="action.v">
                                     </div>
-                                    <span class="glyphicon glyphicon-remove list-remove-btn" ng-click="$ctrl.removeFromArray(function.actions, $index)"></span>
+                                    <div ng-if="action.type == 'operation'" class="form-group col-sm-4">
+                                        <label>Время выполнения (мин)</label>
+                                        <input class="form-control" type="number" ng-model="action.t">
+                                    </div>
                                 </div>
+
                                 <div ng-if="action.type == 'subFunction'">
                                     <ul class="list-group" >
-                                        <label>Операции</label>
+                                        <label class="text-warning">Операции</label>
                                         <li class="list-group-item"
                                             ng-repeat="operation in action.operations track by $index">
-                                            <div class="form-inline">
-                                                <label>Название операции :</label>
-                                                <input class="form-control" type="text" ng-model="operation.name">
-                                                <label>Время выполнения :</label>
-                                                <input class="form-control" type="number" ng-model="operation.t">
-                                                <span class="glyphicon glyphicon-remove list-remove-btn" ng-click="$ctrl.removeFromArray(action.operations, $index)"></span>
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <span class="glyphicon glyphicon-remove list-remove-btn" ng-click="$ctrl.removeFromArray(action.operations, $index)"></span>
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label>Название операции</label>
+                                                    <input class="form-control" type="text" ng-model="operation.name">
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label>Периодичность</label>
+                                                    <input class="form-control" type="number" ng-model="operation.v">
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <label>Время выполнения (мин)</label>
+                                                    <input class="form-control" type="number" ng-model="operation.t">
+                                                </div>
                                             </div>
                                         </li>
                                     </ul>
@@ -88,7 +118,7 @@
                             </li>
                         </ul>
                         <div class="form-inline">
-                            <div type="button" class="btn btn-link" ng-click="$ctrl.addToArray(function.actions, {type: 'subFunction', operations: []})">Добавить под. функцию</div>
+                            <div type="button" class="btn btn-link" ng-click="$ctrl.addToArray(function.actions, {type: 'subFunction', operations: []})">Добавить подфункцию</div>
                             <div type="button" class="btn btn-link" ng-click="$ctrl.addToArray(function.actions, {type: 'operation'})">Добавить операцию</div>
                         </div>
                     </li>
@@ -98,7 +128,7 @@
             <div type="button" class="btn btn-link" ng-click="$ctrl.addToArray($ctrl.employee.processes, {})">Добавить процесс</div>
         </ul>
     </div>
-    <div class="form-group col-sm-12">
+    <div class="form-group col-sm-12 helpers-margin-top-30">
         <button  type="submit" class="btn btn-primary">Сохранить</button>
     </div>
 </form>

@@ -14,13 +14,12 @@ router.get('/', wrap(function*(req, res) {
     res.json(result);
 }));
 
-router.get('/cvs-export', wrap(function*(req, res) {
+router.get('/cvs-export.csv', wrap(function*(req, res) {
     const {user} = req;
     const result = yield exportCvs(user._id);
 
     res.writeHead(200, {
-        'Content-Type': 'text/csv; charset=utf-16le; header=present;',
-        'content-disposition': 'attachment; filename=org_charts.csv'
+        'Content-Type': 'text/csv; charset=utf-16le; header=present;'
     });
     res.write(result);
     res.end();

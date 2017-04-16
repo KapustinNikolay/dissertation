@@ -1,4 +1,5 @@
 window.jQuery = window.$ = require('jquery');
+window.html2canvas = require('html2canvas');
 import 'font-awesome/css/font-awesome.css';
 import 'orgchart';
 import 'orgchart/dist/css/jquery.orgchart.css';

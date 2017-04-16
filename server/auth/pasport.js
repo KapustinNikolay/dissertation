@@ -36,7 +36,6 @@ passport.serializeUser((user, callback) => {
   callback(null, user._id);
 });
 
-
 passport.deserializeUser((id, callback) => {
   Users
     .findById(id)

@@ -1,16 +1,16 @@
 <div class="container-fluid">
-    <h2>1 метод</h2>
+    <h2>Метод информационных оценок</h2>
     <div class="row">
-        <div class="col-xs-7">
+        <div class="col-xs-12">
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>Название</th>
+                    <th>Вариант организационной структуры</th>
                     <th>Системная сложность Со</th>
                     <th>Собственная сложность Сс</th>
                     <th>Внутренняя сложность Св</th>
-                    <th>Степень централизации a</th>
-                    <th>Коэффициент использования b</th>
+                    <th>Коэффициент централизации</th>
+                    <th>Коэффициент децентрализации</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -24,31 +24,27 @@
                 </tr>
                 </tbody>
             </table>
-            <strong class="pull-right">Самый оптимальный вариант: {{$ctrl.structureAnalysisRec.name}}</strong>
+            <strong class="pull-right">Лучший вариант: {{$ctrl.structureAnalysisRec}}</strong>
         </div>
     </div>
 
-    <h2>2 метод</h2>
+    <h2>Метод, основанный на теории массового обслуживания</h2>
     <div class="row">
-        <div class="col-xs-10">
+        <div class="col-xs-12">
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>Название</th>
-                    <th>Лямбда</th>
-                    <th>Мю</th>
-                    <th>P</th>
-                    <th>L сист</th>
-                    <th>W сист</th>
-                    <th>L оч</th>
-                    <th>W оч</th>
+                    <th>Вариант организационной структуры</th>
+                    <th>Загруженность операциями</th>
+                    <th>Среднее количество выполняемых операций, Ед.</th>
+                    <th>Среднее время выполнения операции, Мин.</th>
+                    <th>Среднее количество операций, ожидающих выполнения, Ед.</th>
+                    <th>Среднее время ожидания выполнения операций, Мин.</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="i in $ctrl.smoAnalysis">
                     <td>{{i.name}}</td>
-                    <td>{{i.Lb}}</td>
-                    <td>{{i.My}}</td>
                     <td>{{i.P}}</td>
                     <td>{{i.Lsis}}</td>
                     <td>{{i.Wsis}}</td>
@@ -57,7 +53,8 @@
                 </tr>
                 </tbody>
             </table>
-            <strong class="pull-right">Самый оптимальный вариант: ????</strong>
+            <strong class="pull-right">Лучший вариант: {{$ctrl.smoAnalysisRes}}</strong>
         </div>
     </div>
+    <a href="/api/calculations/cvs-export" class="btn btn-success">Экспортировать</a>
 </div>

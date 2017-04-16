@@ -31,7 +31,7 @@ export default function (_employees, _companies) {
     result.push(
       {
         name: companies[i].name,
-        Cc, Co, Cb, a, b
+          Co, Cc, Cb, a, b
       }
     );
   }

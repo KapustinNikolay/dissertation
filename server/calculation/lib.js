@@ -8,10 +8,10 @@ import Company from '../../models/Companies';
 import _structureAnalysis from './structureAnalysis';
 import _smoAnalysis from './smoAnalysis';
 import {
-    objToCvsString,
-    makeCvsTitle,
+    objToCsvString,
+    makeCsvTitle,
     stringSeparator
-} from './cvs';
+} from './csv';
 
 export const calculate = co.wrap(function*(user) {
     let employees = yield Employee.find({user}).lean();
@@ -43,11 +43,11 @@ export const exportCvs = co.wrap(function*(user) {
         'Коэффициент децентрализации'
     ];
 
-    cvs += makeCvsTitle(structureAnalysisTitles);
+    cvs += makeCsvTitle(structureAnalysisTitles);
     data.structureAnalysis.forEach(i => {
-       cvs += objToCvsString(i);
+       cvs += objToCsvString(i);
     });
-    cvs += objToCvsString(['Лучший вариант:', data.structureAnalysisRec]);
+    cvs += objToCsvString(['Лучший вариант:', data.structureAnalysisRec]);
     cvs += stringSeparator;
     cvs += 'Метод, основанный на теории массового обслуживания' + stringSeparator;
 
@@ -59,11 +59,11 @@ export const exportCvs = co.wrap(function*(user) {
         'Среднее количество операций, ожидающих выполнения, Ед.',
         'Среднее время ожидания выполнения операций, Мин.'
     ];
-    cvs += makeCvsTitle(smoAnalysisTitles);
+    cvs += makeCsvTitle(smoAnalysisTitles);
     data.smoAnalysis.forEach(i => {
-        cvs += objToCvsString(i);
+        cvs += objToCsvString(i);
     });
-    cvs += objToCvsString(['Лучший вариант:', data.smoAnalysisRes]);
+    cvs += objToCsvString(['Лучший вариант:', data.smoAnalysisRes]);
 
     return cvs;
 });

@@ -4,7 +4,7 @@
 export const columnSeparator = '\t'; //'\t'
 export const stringSeparator = '\n'; //'\n'
 
-export function makeCvsTitle(array) {
+export function makeCsvTitle(array) {
     let string = '';
 
     array.forEach(i => {
@@ -14,7 +14,7 @@ export function makeCvsTitle(array) {
     return string + stringSeparator;
 }
 
-export function objToCvsString(obj) {
+export function objToCsvString(obj) {
     let string = '';
 
     for(const i in obj) {

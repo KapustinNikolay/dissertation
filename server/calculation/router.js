@@ -20,7 +20,7 @@ router.get('/cvs-export', wrap(function*(req, res) {
 
     res.writeHead(200, {
         'Content-Type': 'text/csv; charset=utf-16le; header=present;',
-        'content-disposition': 'attachment; filename=org_charts.cvs'
+        'content-disposition': 'attachment; filename=org_charts.csv'
     });
     res.write(result);
     res.end();

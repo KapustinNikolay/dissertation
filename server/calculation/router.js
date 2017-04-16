@@ -19,7 +19,8 @@ router.get('/cvs-export', wrap(function*(req, res) {
     const result = yield exportCvs(user._id);
 
     res.writeHead(200, {
-        'Content-Type': 'text/csv; charset=utf-16le; header=present;'
+        'Content-Type': 'text/csv; charset=utf-16le; header=present;',
+        'content-disposition': 'attachment; filename=org_charts.cvs'
     });
     res.write(result);
     res.end();

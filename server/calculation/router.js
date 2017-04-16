@@ -3,6 +3,7 @@
  */
 import {Router} from 'express';
 import wrap from 'co-express';
+import iconv from 'iconv';
 
 import {calculate, exportCvs} from './lib';
 
@@ -21,7 +22,9 @@ router.get('/cvs-export.csv', wrap(function*(req, res) {
     res.writeHead(200, {
         'Content-Type': 'text/csv; charset=utf-16le; header=present;'
     });
-    res.write(result);
+    const body = new Buffer(result, 'binary');
+    const conv = new iconv.Iconv('utf8', 'windows-1251');
+    res.write(conv.convert(body));
     res.end();
 }));
 

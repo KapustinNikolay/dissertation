@@ -22,18 +22,24 @@
 .orgchart-container {
   text-align: center;
   .node {
-    .employee-add-btn {
+    .employee-btn {
       position: absolute;
       cursor: pointer;
       top: -7px;
-      right: -3px;
       font-size: 20px;
-      color: $sidebar_bg;
       opacity: 0;
       transition: opacity .3s;
+      &-add {
+        color: $sidebar_bg;
+        right: -3px;
+      }
+      &-copy {
+        left: -3px;
+        color: #000;
+      }
     }
     &:hover {
-      .employee-add-btn {
+      .employee-btn {
         opacity: 1;
       }
     }

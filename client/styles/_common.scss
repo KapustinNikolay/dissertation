@@ -1,5 +1,6 @@
 body {
   background-color: $main_bg;
+  padding-top: 52px;
 }
 .diss_sidebar {
   position: fixed;
@@ -43,9 +44,18 @@ body {
   width: 100%;
   position: fixed;
   top: 15px;
-  z-index: 1000;
+  z-index: 60000000;
   .alerts {
     width: 500px;
     margin: 0 auto;
   }
+}
+
+.navbar {
+  margin-bottom: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50000000;
 }

@@ -3,7 +3,7 @@
  */
 import angular from 'angular';
 
-function dir($state, $uibModal) {
+function dir($state, $uibModal, copyPastService, alertsService) {
     return {
         restrict: "E",
         scope: {
@@ -12,7 +12,6 @@ function dir($state, $uibModal) {
         template: '<div></div>',
         link: function (scope, element) {
             const company = scope.data.company || scope.data._id;
-            console.log(scope.data)
             $(element).orgchart({
                 'data': scope.data,
                 'nodeContent': 'title',
@@ -21,6 +20,20 @@ function dir($state, $uibModal) {
                 'exportButton': true,
                 'exportFilename': scope.data.name,
                 createNode: ($node, data) => {
+                    $node.find('.edge').remove();
+
+                    if (copyPastService.isCopyMode()) {
+                        if (data._id !== company) {
+
+                            $node.on('click', () => {
+                                copyPastService.copyEmployee(data._id, () => {
+                                    alertsService.add('Орг структура клонирована');
+                                    $state.reload();
+                                });
+                            });
+                        }
+                        return false;
+                    }
 
                     if (data._id !== company) {
                         $node.on('click', () => {
@@ -29,10 +42,10 @@ function dir($state, $uibModal) {
                     }
 
                     const secondMenuIcon = $('<i>', {
-                        'class': 'fa fa-plus employee-add-btn',
+                        'class': 'fa fa-plus employee-btn employee-btn-add',
                         click: function (e) {
                             e.stopPropagation();
-                            var modalInstance = $uibModal.open({
+                            const modalInstance = $uibModal.open({
                                 animation: true,
                                 component: 'employeesModal',
                                 resolve: {
@@ -51,12 +64,24 @@ function dir($state, $uibModal) {
                         }
                     });
 
-                    $node.append(secondMenuIcon).find('.edge').remove();
+                    $node.append(secondMenuIcon);
+                    if (data._id !== company) {
+                        const copyBtn = $('<i>', {
+                            'class': 'fa fa-files-o employee-btn employee-btn-copy',
+                            click: (e) => {
+                                e.stopPropagation();
+                                copyPastService.setCopyEmployee(data._id);
+                                $state.reload();
+                            }
+                        });
+                        $node.append(copyBtn);
+                    }
                 }
+
             });
             $(element).find('.oc-export-btn').text('Экспортировать')
         }
     }
 }
 
-angular.module('common').directive('orgChart', ['$state', '$uibModal', dir]);
+angular.module('common').directive('orgChart', ['$state', '$uibModal', 'copyPastService', 'alertsService', dir]);

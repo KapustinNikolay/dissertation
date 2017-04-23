@@ -4,10 +4,19 @@
 import angular from 'angular';
 
 angular
-  .module('employees')
-  .service('employeesService', ['$resource', ($resource) => $resource('api/employees/:id',
-    {id: '@_id'},
-    {
-      save: {method: 'POST'}
+    .module('employees')
+    .service('employeesService', ['$resource', ($resource) => $resource('api/employees/:id/:action', {
+        id: '@_id',
+        action: '@action'
+    }, {
+        save: {
+            method: 'POST'
+        },
+        cloneEmployee: {
+            method: 'POST',
+            params: {
+                action: 'clone'
+            }
+        }
     })
-  ]);
+    ]);

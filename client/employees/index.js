@@ -6,6 +6,7 @@ import angular from 'angular';
 angular.module('employees', ['ngResource', 'ui.router']);
 
 require('./services/employeesService');
+require('./services/copyPastService');
 require('./router');
 require('./components/edit');
 require('./components/item');

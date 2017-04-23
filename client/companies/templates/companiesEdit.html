@@ -3,8 +3,14 @@
     <companies-form m='$ctrl.m' success="$ctrl.save()" company="$ctrl.company"></companies-form>
 </div>
 
-
 <div class="helpers-padding-left-350 orgchart-container">
-    <h2>Организационная схема</h2>
-    <org-chart data="$ctrl.orgChart"></org-chart>
+    <div class="row">
+        <div ng-if="$ctrl.isCopyMode" class="alert alert-info" style="text-align: left">
+            <span>Вы в режиме клонирования орг. элемента</span>
+            <button class="btn btn-warning pull-right"  ng-click="$ctrl.exitCopyMode()">Выйти</button>
+            <div class="clearfix"></div>
+        </div>
+        <h2>Организационная схема</h2>
+        <org-chart data="$ctrl.orgChart"></org-chart>
+    </div>
 </div>

@@ -5,20 +5,28 @@ import angular from 'angular';
 import template from '../templates/companiesEdit.html';
 
 class Controller {
-  constructor(alertsService) {
-    this.alertsService = alertsService;
-  }
+    constructor(alertsService, copyPastService, $state) {
+        this.$state = $state;
+        this.copyPastService = copyPastService;
+        this.alertsService = alertsService;
+        this.isCopyMode = copyPastService.isCopyMode();
+    }
 
-  save() {
-    this.alertsService.add('Сохранено успешно');
-  }
+    exitCopyMode() {
+        this.copyPastService.clearCopyEmployee();
+        this.$state.reload();
+    }
+
+    save() {
+        this.alertsService.add('Сохранено успешно');
+    }
 }
 
 angular.module('companies').component('companiesEdit', {
-  template,
-  bindings: {
-    company: '<',
-    orgChart: '<'
-  },
-  controller: ['alertsService', Controller]
+    template,
+    bindings: {
+        company: '<',
+        orgChart: '<'
+    },
+    controller: ['alertsService', 'copyPastService', '$state', Controller]
 });

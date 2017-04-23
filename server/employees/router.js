@@ -9,5 +9,6 @@ const router = express.Router();
 router.get('/:id', checkEmployeeInUser, controllers.employeeGet);
 router.post('/', controllers.employeeCreate);
 router.post('/:id', checkEmployeeInUser, controllers.employeeUpdate);
+router.post('/:id/clone', checkEmployeeInUser, controllers.employeeClone);
 
 export default router;

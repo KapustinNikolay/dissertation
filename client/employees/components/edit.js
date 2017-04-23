@@ -8,6 +8,7 @@ import template from '../templates/employeesEdit.html';
 class Controller {
   constructor(alertsService) {
     this.alertsService = alertsService;
+
   }
   save() {
     this.alertsService.add('Сохранено успешно');

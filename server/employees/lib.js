@@ -8,7 +8,7 @@ import makeOrgTree from '../common/makeOrgTree';
 import Employees from  '../../models/Employees';
 
 export function employeeCreate(employee) {
-    return Employees.create(employee);
+    return new Employees(employee).save();
 }
 
 export const employeeGet = co.wrap(function*(id) {
@@ -30,15 +30,14 @@ export const employeeGet = co.wrap(function*(id) {
 });
 
 export function employeeUpdate(_id, data) {
-    let update = {$set: data};
 
     if (data.type == "department") {
         delete data.processes;
         update.$unset = {processes: '1'};
     }
-    return Employees.update(
+    return Employees.updateOne(
         {_id},
-        update
+        data
     );
 }
 

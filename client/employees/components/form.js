@@ -6,39 +6,47 @@ import template from '../templates/form.html'
 import _ from 'lodash';
 
 class Controller {
-  constructor(employeesService, $scope, alertsService) {
-    angular.extend(this, {
-      employeesService,
-      $scope,
-      alertsService
-    });
+    constructor(employeesService, $scope, alertsService) {
+        angular.extend(this, {
+            employeesService,
+            $scope,
+            alertsService
+        });
+        this.errors = {};
+    }
 
-  }
+    addToArray(array, item) {
+        array.push(item);
+    }
 
-  addToArray(array, item) {
-    array.push(item);
-  }
+    removeFromArray(array, i) {
+        array.splice(i, 1);
+    }
 
-  removeFromArray(array, i) {
-    array.splice(i, 1);
-  }
-
-  save(form) {
-    this.$scope.$broadcast('schemaFormValidate');
-    form.$setSubmitted(true);
-    if (form.$invalid) return;
-    let employee = _.merge(this.employee, this.resolve && this.resolve.additional || {});
-    this.employeesService.save(employee, (res) => {
-      this.success();
-    });
-  }
+    save(form) {
+        this.$scope.$broadcast('schemaFormValidate');
+        form.$setSubmitted(true);
+        let isInvalid = false;
+        let i;
+        for (i in this.errors) {
+            if (this.errors.hasOwnProperty(i) && this.errors[i]) {
+                isInvalid = true;
+                break;
+            }
+        }
+        if (form.$invalid || isInvalid) return;
+        let employee = _.merge(this.employee, this.resolve && this.resolve.additional || {});
+        this.employeesService.save(employee, (res) => {
+            this.success();
+        });
+    }
 }
 
 angular.module('employees').component('employeesForm', {
-  template,
-  bindings: {
-    employee: '<',
-    success: '&'
-  },
-  controller: ['employeesService', '$scope', 'alertsService', Controller]
+    template,
+    bindings: {
+        employee: '<',
+        success: '&'
+    },
+    controller: ['employeesService', '$scope', 'alertsService', Controller]
 });

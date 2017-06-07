@@ -13,3 +13,8 @@ require('./components/item');
 require('./components/form');
 require('./components/modal');
 require('./components/tree');
+require('./components/forms/processes');
+require('./components/forms/functions');
+require('./components/forms/actions');
+require('./components/forms/subFunctions');
+require('./components/forms/operations');

@@ -53,4 +53,10 @@ router.use('/api/calculations', calculation);
 router.get('/', (req, res) => {
   res.render('index');
 });
+
+router.use(function (err, req, res, next) {
+   if (err) {
+     res.status(500).json({error: err.toString()});
+   }
+});
 export default router;

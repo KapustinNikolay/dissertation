@@ -3,7 +3,67 @@
  */
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+const operationSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    v: {
+        type: Number
+    },
+    t: {
+        type: Number
+    }
+});
+
+const actionSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    v: {
+        type: Number
+    },
+    t: {
+        type: Number
+    },
+    type: {
+        type: String,
+        enum: ['operation', 'subFunction'],
+        required: true
+    },
+    operations: [
+        operationSchema
+    ]
+});
+
+const functionSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    v: {
+        type: Number
+    },
+    actions: [
+        actionSchema
+    ]
+});
+
+const processesSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    v: {
+        type: Number
+    },
+    functions:[
+        functionSchema
+    ]
+});
+
+const employeeSchema = new mongoose.Schema({
   parent: {
     type: mongoose.Schema.ObjectId,
     ref: 'Employee'
@@ -28,62 +88,15 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   processes: [
-    {
-      name: {
-        type: String,
-        required: true
-      },
-      v: {
-        type: Number
-      },
-      functions: [
-        {
-          name: {
-            type: String,
-            required: true
-          },
-          v: {
-            type: Number
-          },
-          actions: [
-            {
-              name: {
-                type: String,
-                required: true
-              },
-              v: {
-                type: Number
-              },
-              t: {
-                type: Number
-              },
-              type: {
-                type: String,
-                enum: ['operation', 'subFunction'],
-                required: true
-              },
-              operations: [
-                {
-                  name: {
-                    type: String,
-                    required: true
-                  },
-                  v: {
-                    type: Number
-                  },
-                  t: {
-                    type: Number
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+      processesSchema
   ]
 });
 
-const model = mongoose.model('Employee', userSchema);
+employeeSchema.pre('updateOne', function (next) {
+    this.options.runValidators = true;
+    next();
+});
+
+const model = mongoose.model('Employee', employeeSchema);
 
 export default model;

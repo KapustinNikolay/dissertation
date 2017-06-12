@@ -9,15 +9,6 @@ class Controller extends ComponentWithArrays {
         super();
     }
 
-    $doCheck() {
-        this.errors.actions = this.actions.length ? !!this.actions.find((i) => {
-            return !i.name || !i.v || (i.type == 'operation' && !i.t);
-        }) : false;
-    }
-
-    $onDestroy() {
-        this.errors.actions = false;
-    }
 }
 
 angular.module('employees').component('formActions', {
@@ -31,16 +22,14 @@ angular.module('employees').component('formActions', {
                 <div class="col-sm-12">
                     <span class="glyphicon glyphicon-remove list-remove-btn" ng-click="$ctrl.removeFromArray($ctrl.actions, $index)"></span>
                 </div>
-                <form-operation ng-if="action.type == 'operation'" operation="action" errors="$ctrl.errors" form="$ctrl.form"></form-operation>
-                <form-sub-function ng-if="action.type == 'subFunction'" sub-function="action" errors="$ctrl.errors" form="$ctrl.form"></form-sub-function>
+                <form-operation ng-if="action.type == 'operation'" operation="action"></form-operation>
+                <form-sub-function ng-if="action.type == 'subFunction'" sub-function="action"></form-sub-function>
             </div>
         </li>
     </ul>
     `,
     bindings: {
-        actions: '=',
-        form: '<',
-        errors: '<'
+        actions: '='
     },
     controller: [Controller]
 });

@@ -2,7 +2,10 @@
  * Created by nik on 25.03.17.
  */
 import _ from 'lodash';
-import {toN3, factorial} from './utils';
+import {toN3, factorial, isNotEmptyArray} from './utils';
+
+const WORK_DAYS = 247;
+const WORK_HOURS = 8;
 
 export default function (_employees, _companies) {
     const result = [];
@@ -43,7 +46,14 @@ export default function (_employees, _companies) {
             res.Woch += doc.Woch || 0;
         });
 
-        res.P = (res.P * 100).toFixed(2) + '%';
+        let i;
+        for (i in res) {
+            if (res.hasOwnProperty(i) && typeof res[i] === 'number') {
+                res[i] = _.round(res[i], 2);
+            }
+        }
+
+        res.P = (res.P * 100) + '%';
         result.push(res);
     }
 
@@ -89,59 +99,164 @@ function calculateDepartments(departments, workers) {
 }
 
 function calculateEmplyees(worker) {
-    let My = 0; //Мю
-    let Lb = 0; //Лямбда
-
+    //if (worker._id.toString() != '593e4b0e9c40d7026efde22b') return false;
+    const res = {};
     const {processes} = worker;
-    if (processes && processes.length) {
-        processes.forEach((process) => {
-            let functionsMy = 0;
-            let functionsLb = 0;
+    const {t, lb} = detourProcesses(processes);
 
-            const {functions} = process;
-            if (functions && functions.length) {
-                functions.forEach((func) => {
-                    let actionsMy = 0;
-                    let actionsLb = 0;
+    res.Lb = lb / (WORK_DAYS * WORK_HOURS);
+    res.My = lb / t * 3600;
+    res.p = res.Lb / res.My;
+    res.Lsis = res.p / (1 - res.p);
+    res.Wsis = res.p / (res.Lb * (1 - res.p));
+    res.Loch = Math.pow(res.p, 2) / (1 - res.p);
+    res.Woch = Math.pow(res.p, 2) / (res.Lb * (1 - res.p));
 
-                    const {actions} = func;
-                    if (actions && actions.length) {
-                        actions.forEach((action) => {
-
-                            let {operations} = action;
-                            if (action.type === 'subFunction' && operations && operations.length) {
-                                let operationsMy = 0;
-                                let operationsLb = 0;
-
-                                operations.forEach((operation) => {
-                                    operationsMy += (operation.t ? (1 / operation.t) : 0);
-                                    operationsLb += (operation.v || 0);
-                                });
-
-                                actionsLb += ((operationsLb || 1) * (action.v || 1));
-                                actionsMy += operationsMy * actionsLb;
-                            } else {
-                                actionsMy += (action.t ? (1 / action.t) : 0);
-                                actionsLb += (action.v || 0);
-                            }
-                        });
-                    }
-
-                    functionsLb += ((actionsLb || 1) * (func.v || 1));
-                    functionsMy += actionsMy * functionsLb;
-                });
-            }
-
-            Lb += ((functionsLb || 1) * (process.v || 1));
-            My += functionsMy * Lb;
-        });
+    let i;
+    for (i in res) {
+        if (res.hasOwnProperty(i)) {
+            res[i] = _.round(res[i], 2);
+        }
     }
 
-    worker.Lb = Lb;
-    worker.My = My;
-    const P = worker.P = Lb / My;
-    worker.Lsis = P / (1 - P);
-    worker.Wsis = P / (Lb * (1 - P));
-    worker.Loch = Math.pow(P, 2) / (1 - P);
-    worker.Woch = Math.pow(P, 2) / (Lb * (1 - P));
+    _.merge(worker, res);
+
+    //console.log('RESULT', worker);
+
+    function detourProcesses(processes) {
+        const res = {
+            t: 0,
+            lb: 0
+        }
+        if (!isNotEmptyArray(processes)) return res;
+
+        processes.forEach(process => {
+            const {functions} = process;
+            const {t, lb} = detourFunctions(functions);
+            process.t = (t || 0) * process.v;
+            process.lb = (process.v || 1) * (lb || 1);
+            res.t += process.t
+            res.lb += process.lb;
+
+            //console.log('PROCESS', process.name, process.t, process.lb);
+        });
+        return res;
+    }
+
+    function detourFunctions(functions) {
+        const res = {
+            t: 0,
+            lb: 0
+        };
+
+        if (!isNotEmptyArray(functions)) return res;
+
+        functions.forEach(fn => {
+            const {actions} = fn;
+            const {t, lb} = detourActions(actions);
+            fn.t = (t || 0) * fn.v;
+            fn.lb = (fn.v || 1) * (lb || 1);
+            res.t += fn.t;
+            res.lb += fn.lb;
+
+            //console.log('FUNCTION', fn.name, fn.t, fn.lb);
+        });
+
+        return res;
+    }
+
+    function detourActions(actions) {
+        const res = {
+            t: 0,
+            lb: 0
+        }
+        if (!isNotEmptyArray(actions)) return res;
+
+        actions.forEach(action => {
+           if (action.type == 'subFunction') {
+               const {operations} = action;
+               const {t, lb} = detourOperations(operations);
+
+               action.t = (t || 0) * action.v;
+               action.lb = (action.v || 1) * (lb || 1);
+               res.t += action.t;
+               res.lb += action.lb
+
+               //console.log('ACTION SUBFUNCTION', action.name, action.t, action.lb);
+           } else {
+               const {subOperations} = action;
+               const {t, lb} = detourSubOperations(subOperations);
+               action.t = (t || 0) + (action.t || 1) * (action.v || 1);
+               action.lb = (action.v || 1) * (lb || 1);
+               res.t += action.t;
+               res.lb += action.lb
+
+               //console.log('ACTION OPERATION', action.name, action.t, action.lb);
+           }
+        });
+
+        return res;
+    }
+
+    function detourOperations(operations) {
+        const res = {
+            t: 0,
+            lb: 0
+        }
+
+        if (!isNotEmptyArray(operations)) return res;
+
+        operations.forEach(operation => {
+            const {subOperations} = operation;
+            const {t, lb} = detourSubOperations(subOperations);
+            operation.t = (t || 0) + (operation.t || 1) * (operation.v || 1);
+            operation.lb = (operation.v || 1) * (lb || 1);
+            res.t += operation.t;
+            res.lb += operation.lb;
+
+            //console.log('OPERATION', operation.name, operation.t, operation.lb);
+        });
+
+        return res;
+    }
+
+    function detourSubOperations(subOperations) {
+        let res = {
+            t: 0,
+            lb: 0
+        };
+        if (!isNotEmptyArray(subOperations)) return res;
+
+        subOperations.forEach(subOperation => {
+            const {items, rate} = subOperation;
+            const {t, lb} = detourItems(items, rate);
+            subOperation.t = t;
+            subOperation.lb = lb;
+            res.t += t;
+            res.lb += lb;
+
+            //console.log('SUBOPERATION', subOperation.name, subOperation.t, subOperation.lb);
+        });
+
+        return res;
+    }
+
+    function detourItems(items, rate) {
+        let res = {
+            t: 0,
+            lb: 0
+        };
+        if (!isNotEmptyArray(items)) return res;
+
+        items.forEach(item => {
+            item.t = rate * item.v * item.t;
+            item.lb = rate * item.v;
+            res.t += item.t;
+            res.lb += item.lb;
+
+            //console.log('ITEM', item.name, item.t, item.lb);
+        });
+
+        return res;
+    }
 }

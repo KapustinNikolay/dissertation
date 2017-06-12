@@ -3,17 +3,50 @@
  */
 import mongoose from 'mongoose';
 
+const subOperation = new mongoose.Schema({
+    rate: Number,
+    name: {
+        type: String,
+        required: true
+    },
+    items: [
+        {
+            name: {
+                type: String,
+                required: true
+            },
+            v: {
+                type: Number,
+                required: true,
+                default: 1
+            },
+            t: {
+                type: Number,
+                required: true,
+                default: 1
+            }
+        }
+    ]
+});
+
 const operationSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
     },
     v: {
-        type: Number
+        type: Number,
+        required: true,
+        default: 1
     },
     t: {
-        type: Number
-    }
+        type: Number,
+        required: true,
+        default: 1
+    },
+    subOperations: [
+        subOperation
+    ]
 });
 
 const actionSchema = new mongoose.Schema({
@@ -22,10 +55,14 @@ const actionSchema = new mongoose.Schema({
         required: true
     },
     v: {
-        type: Number
+        type: Number,
+        required: true,
+        default: 1
     },
     t: {
-        type: Number
+        type: Number,
+        required: true,
+        default: 1
     },
     type: {
         type: String,
@@ -34,6 +71,9 @@ const actionSchema = new mongoose.Schema({
     },
     operations: [
         operationSchema
+    ],
+    subOperations: [
+        subOperation
     ]
 });
 
@@ -43,7 +83,9 @@ const functionSchema = new mongoose.Schema({
         required: true
     },
     v: {
-        type: Number
+        type: Number,
+        required: true,
+        default: 1
     },
     actions: [
         actionSchema
@@ -56,7 +98,9 @@ const processesSchema = new mongoose.Schema({
         required: true
     },
     v: {
-        type: Number
+        type: Number,
+        required: true,
+        default: 1
     },
     functions:[
         functionSchema

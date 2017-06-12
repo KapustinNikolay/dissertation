@@ -12,16 +12,6 @@ class Controller extends ComponentWithArrays {
     $onInit() {
         this.processes = this.processes || [];
     }
-
-    $doCheck() {
-        this.errors.processes = this.processes.length ? !!this.processes.find((i) => {
-            return !i.name || !i.v;
-        }) : false;
-    }
-
-    $onDestroy() {
-        this.errors.processes = false;
-    }
 }
 
 angular.module('employees').component('formProcesses', {
@@ -37,23 +27,23 @@ angular.module('employees').component('formProcesses', {
                         <span class="glyphicon glyphicon-remove list-remove-btn" 
                         ng-click="$ctrl.removeFromArray($ctrl.processes, $index)"></span>
                     </div>
-                    <div class="form-group col-sm-4" ng-class="{'has-error' : !process.name && $ctrl.form.$submitted}">
+                    <div class="form-group col-sm-4" ng-class="{'has-error' : !process.name}">
                         <label class="control-label">Название процесса</label>
                         <input class="form-control" type="text" ng-model="process.name">
-                        <div ng-if="!process.name && $ctrl.form.$submitted" class="help-block">
+                        <div ng-if="!process.name" class="help-block">
                             Введите название
                         </div>
                     </div>
 
-                    <div class="form-group col-sm-4" ng-class="{'has-error' : !process.v && $ctrl.form.$submitted}">
+                    <div class="form-group col-sm-4" ng-class="{'has-error' : !process.v}">
                         <label class="control-label">Периодичность</label>
                         <input class="form-control" type="number" ng-model="process.v">
-                        <div ng-if="!process.v && $ctrl.form.$submitted" class="help-block">
+                        <div ng-if="!process.v" class="help-block">
                             Периодичность должна быть положительным числом
                         </div>
                     </div>
                 </div>
-                <form-functions functions="process.functions" errors="$ctrl.errors" form="$ctrl.form"></form-functions>
+                <form-functions functions="process.functions" form="$ctrl.form"></form-functions>
                 <div type="button" class="btn btn-link" ng-click="$ctrl.addToArray(process.functions, {actions: []})">Добавить функцию</div>
             </li>
        
@@ -62,9 +52,7 @@ angular.module('employees').component('formProcesses', {
     </div>
     `,
     bindings: {
-        processes: '=',
-        errors: '<',
-        form: '<'
+        processes: '='
     },
     controller: [Controller]
 });

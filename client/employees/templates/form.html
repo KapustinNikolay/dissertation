@@ -22,10 +22,7 @@
         </div>
     </div>
 
-    <form-processes ng-if="$ctrl.employee.type == 'employee'"
-                    form="form"
-                    errors="$ctrl.errors"
-                    processes="$ctrl.employee.processes"></form-processes>
+    <form-processes ng-if="$ctrl.employee.type == 'employee'" processes="$ctrl.employee.processes"></form-processes>
 
     <div class="form-group col-sm-12 helpers-margin-top-30">
         <button  type="submit" class="btn btn-primary">Сохранить</button>

@@ -20,7 +20,7 @@ const router = express.Router();
 const SessionStore = sessionStore(session);
 
 if (process.env.NODE_ENV == 'development') {
-  router.use(webPackDev(webpack(webpackConf),{noInfo: true}));
+  router.use(webPackDev(webpack(webpackConf), {quiet: true, lazy: true}));
 } else {
   router.use('/', express.static(path.join(__dirname, '../dist')));
 }
@@ -56,6 +56,7 @@ router.get('/', (req, res) => {
 
 router.use(function (err, req, res, next) {
    if (err) {
+     console.error(err);
      res.status(500).json({error: err.toString()});
    }
 });

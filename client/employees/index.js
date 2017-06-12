@@ -18,3 +18,4 @@ require('./components/forms/functions');
 require('./components/forms/actions');
 require('./components/forms/subFunctions');
 require('./components/forms/operations');
+require('./components/forms/supOperations');

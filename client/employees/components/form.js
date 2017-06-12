@@ -26,15 +26,7 @@ class Controller {
     save(form) {
         this.$scope.$broadcast('schemaFormValidate');
         form.$setSubmitted(true);
-        let isInvalid = false;
-        let i;
-        for (i in this.errors) {
-            if (this.errors.hasOwnProperty(i) && this.errors[i]) {
-                isInvalid = true;
-                break;
-            }
-        }
-        if (form.$invalid || isInvalid) return;
+        if (form.$invalid) return;
         let employee = _.merge(this.employee, this.resolve && this.resolve.additional || {});
         this.employeesService.save(employee, (res) => {
             this.success();

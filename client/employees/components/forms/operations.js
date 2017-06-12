@@ -8,43 +8,43 @@ class Controller extends ComponentWithArrays {
     constructor() {
         super();
     }
-
-    $onInit() {
-        this.operation = this.operation || {};
-    }
 }
 
 angular.module('employees').component('formOperation', {
     template: `
     <div class="col-sm-12">
     
-        <div class="form-group col-sm-4" ng-class="{'has-error' : !$ctrl.operation.name && $ctrl.form.$submitted}">
+        <div class="form-group col-sm-4" ng-class="{'has-error' : !$ctrl.operation.name}">
             <label class="control-label">Название операции</label>
             <input class="form-control" type="text" ng-model="$ctrl.operation.name">
-            <div ng-if="!$ctrl.operation.name && $ctrl.form.$submitted" class="help-block">
+            <div ng-if="!$ctrl.operation.name" class="help-block">
                 Введите название
             </div>
         </div>
-        <div class="form-group col-sm-4" ng-class="{'has-error' : !$ctrl.operation.v && $ctrl.form.$submitted}">
+        <div class="form-group col-sm-4" ng-class="{'has-error' : !$ctrl.operation.v}">
             <label class="control-label">Периодичность</label>
             <input class="form-control" type="number" ng-model="$ctrl.operation.v">
-            <div ng-if="!$ctrl.operation.v && $ctrl.form.$submitted" class="help-block">
+            <div ng-if="!$ctrl.operation.v" class="help-block">
                 Периодичность должна быть положительным числом
             </div>
         </div>
-        <div class="form-group col-sm-4" ng-class="{'has-error' : !$ctrl.operation.t && $ctrl.form.$submitted}">
+        <div class="form-group col-sm-4" ng-class="{'has-error' : !$ctrl.operation.t}">
             <label class="control-label">Время выполнения (мин)</label>
             <input class="form-control" type="number" ng-model="$ctrl.operation.t">
-            <div ng-if="!$ctrl.operation.t && $ctrl.form.$submitted" class="help-block">
+            <div ng-if="!$ctrl.operation.t" class="help-block">
                 Время должно быть положительным числом
             </div>
+        </div>
+        <div ng-if="$ctrl.operation.subOperations" class="form-group">
+        <form-sub-operation sub-operations="$ctrl.operation.subOperations"></form-sub-operation>
+        <div class="form-group col-sm-12">                                   
+            <div type="button" class="btn btn-link" ng-click="$ctrl.addToArray($ctrl.operation.subOperations, {items:[]})">Добавить подоперацию</div>
+        </div>
         </div>
     </div>
     `,
     bindings: {
-        operation: '=',
-        form: '<',
-        errors: '<'
+        operation: '='
     },
     controller: [Controller]
 });

@@ -19,9 +19,10 @@ export const calculate = co.wrap(function*(user) {
 
     const structureAnalysis = _structureAnalysis(employees, companies);
     const smoAnalysis = _smoAnalysis(employees, companies);
-    const structureAnalysisRec = _.minBy(structureAnalysis, i => Math.abs(i.a - i.b)).name;
-    const smoAnalysisRes = _.minBy(smoAnalysis, (i) => (i.Wsis)).name;
-
+    let structureAnalysisRec = _.minBy(structureAnalysis, i => Math.abs(i.a - i.b));
+    structureAnalysisRec = structureAnalysisRec && structureAnalysisRec.name;
+    let smoAnalysisRes = _.minBy(smoAnalysis, (i) => (i.Wsis));
+    smoAnalysisRes = smoAnalysisRes && smoAnalysisRes.name;
     return {
         structureAnalysis,
         smoAnalysis,

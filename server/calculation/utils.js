@@ -8,3 +8,7 @@ export function toN3(n) {
 export function factorial(n) {
   return n ? n * factorial(n - 1) : 1;
 }
+
+export function isNotEmptyArray(arr) {
+    return !!(arr && arr instanceof Array && arr.length);
+}

@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <h1>{{$ctrl.company.name}}</h1>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Вариант организационной структуры</th>
+                    <th>Загруженность операциями</th>
+                    <th>Среднее количество выполняемых операций, Ед.</th>
+                    <th>Среднее время выполнения операции, Мин.</th>
+                    <th>Среднее количество операций, ожидающих выполнения, Ед.</th>
+                    <th>Среднее время ожидания выполнения операций, Мин.</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="i in $ctrl.calculations">
+                    <td>{{i.name}}</td>
+                    <td>{{i.p}}</td>
+                    <td>{{i.Lsis}}</td>
+                    <td>{{i.Wsis}}</td>
+                    <td>{{i.Loch}}</td>
+                    <td>{{i.Woch}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

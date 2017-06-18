@@ -7,6 +7,7 @@ import Employee from '../../models/Employees';
 import Company from '../../models/Companies';
 import _structureAnalysis from './structureAnalysis';
 import _smoAnalysis from './smoAnalysis';
+import indAnalysis from './individualAnalysis';
 import {
     objToCsvString,
     makeCsvTitle,
@@ -31,6 +32,20 @@ export const calculate = co.wrap(function*(user) {
     }
 });
 
+export const individualAnalysis = co.wrap(function*(companyId) {
+    let employees = yield Employee.find({
+        type: "employee",
+        company: companyId
+    }).lean();
+
+    let company = yield Company.findOne({_id: companyId}).lean();
+
+    return {
+        company,
+        calculations: indAnalysis(employees)
+    };
+});
+
 export const exportCvs = co.wrap(function*(user) {
     const data = yield calculate(user);
     let cvs = 'Метод информационных оценок' + stringSeparator;
@@ -46,7 +61,7 @@ export const exportCvs = co.wrap(function*(user) {
 
     cvs += makeCsvTitle(structureAnalysisTitles);
     data.structureAnalysis.forEach(i => {
-       cvs += objToCsvString(i);
+        cvs += objToCsvString(i);
     });
     cvs += objToCsvString(['Лучший вариант:', data.structureAnalysisRec]);
     cvs += stringSeparator;

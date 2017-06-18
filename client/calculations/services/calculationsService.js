@@ -5,7 +5,7 @@ import angular from 'angular';
 
 angular
   .module('calculations')
-  .service('calculationsService', ['$resource', ($resource) => $resource('api/calculations',
-    {},
+  .service('calculationsService', ['$resource', ($resource) => $resource('api/calculations/:id',
+    {id: '@_id'},
     {})
   ]);

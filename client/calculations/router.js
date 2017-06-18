@@ -14,6 +14,10 @@ angular.module('calculations')
         .state('calculations.main', {
           url: '/',
           template: '<calculations></calculations>'
+        })
+          .state('calculations.employee', {
+          url: '/:id',
+          template: '<employee-calculations></employee-calculations>'
         });
     }
   ]);

@@ -4,14 +4,21 @@
 import {Router} from 'express';
 import wrap from 'co-express';
 import Iconv from 'iconv';
+import {checkCompanyInUser} from '../common/middlewares';
 
-import {calculate, exportCvs} from './lib';
+import {calculate, exportCvs, individualAnalysis} from './lib';
 
 const router = Router();
 
 router.get('/', wrap(function*(req, res) {
     const {user} = req;
     const result = yield calculate(user._id);
+    res.json(result);
+}));
+
+router.get('/:id', checkCompanyInUser, wrap(function* (req, res) {
+    const {id} = req.params;
+    const result = yield individualAnalysis(id);
     res.json(result);
 }));
 

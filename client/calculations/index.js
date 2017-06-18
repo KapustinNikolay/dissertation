@@ -8,3 +8,4 @@ angular.module('calculations', ['ngResource', 'ui.router']);
 require('./router');
 require('./services/calculationsService');
 require('./components/main');
+require('./components/employee');

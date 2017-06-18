@@ -98,7 +98,7 @@ function calculateDepartments(departments, workers) {
     });
 }
 
-function calculateEmplyees(worker) {
+export function calculateEmplyees(worker) {
     //if (worker._id.toString() != '593e4b0e9c40d7026efde22b') return false;
     const res = {};
     const {processes} = worker;
@@ -115,13 +115,15 @@ function calculateEmplyees(worker) {
     let i;
     for (i in res) {
         if (res.hasOwnProperty(i)) {
-            res[i] = _.round(res[i], 2);
+            res[i] = res[i] ? _.round(res[i], 2) : 0;
         }
     }
 
     _.merge(worker, res);
+    res.name = worker.name;
 
     //console.log('RESULT', worker);
+    return res;
 
     function detourProcesses(processes) {
         const res = {

@@ -22,6 +22,9 @@ import './employees'
 import './common';
 import './calculations';
 
+require('chart.js')
+require('angular-chart.js')
+
 require('angular-loading-bar/build/loading-bar.css');
 require('./styles/index.scss');
 
@@ -31,6 +34,7 @@ angular.module('myApp', [
   ngResource,
   uiBootstrap,
   schemaForm.name,
+  'chart.js',
   'ngAnimate',
   'angular-loading-bar',
   'companies',

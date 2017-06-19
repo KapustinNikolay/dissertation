@@ -1,7 +1,8 @@
 <div class="container-fluid">
     <h1>{{$ctrl.company.name}}</h1>
-    <div class="row">
-        <div class="col-sm-12">
+    <uib-tabset active="activeJustified" justified="true">
+        <uib-tab index="0" heading="Таблица">
+
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -24,6 +25,14 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
+        </uib-tab>
+        <uib-tab index="1" heading="Диаграмма">
+            <div style="max-width: 1140px;">
+                <canvas id="bar" class="chart chart-bar"
+                        chart-data="$ctrl.data" chart-labels="$ctrl.labels" chart-series="$ctrl.series">
+                </canvas>
+            </div>
+
+        </uib-tab>
+    </uib-tabset>
 </div>

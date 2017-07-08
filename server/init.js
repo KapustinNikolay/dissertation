@@ -22,9 +22,9 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 
-if (ENV != 'development') {
+/*if (ENV != 'development') {
   require('webpack')(require('../config/webpack.prod'), err => err && console.error(err));
-}
+}*/
 
 
 app.use(routes);

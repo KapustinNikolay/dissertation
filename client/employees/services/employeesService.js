@@ -12,6 +12,9 @@ angular
         save: {
             method: 'POST'
         },
+        remove: {
+            method: 'DELETE'
+        },
         cloneEmployee: {
             method: 'POST',
             params: {

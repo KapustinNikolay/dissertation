@@ -37,6 +37,11 @@
         left: -3px;
         color: #000;
       }
+      &-remove {
+        color: red;
+        right: -3px;
+        top: 33px;
+      }
     }
     &:hover {
       .employee-btn {

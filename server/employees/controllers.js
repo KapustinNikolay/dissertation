@@ -21,6 +21,13 @@ export const employeeUpdate = wrap(function*(req, res) {
     res.json({});
 });
 
+export const employeeRemove = wrap(function* (req, res) {
+    const {id} = req.params;
+
+    yield lib.removeEmployee(id);
+    res.json({});
+})
+
 export const employeeClone = wrap(function*(req, res) {
     const {id} = req.params;
     const {copyEmployee} = req.body;

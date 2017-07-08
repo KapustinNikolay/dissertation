@@ -19,7 +19,7 @@ angular.module('common').factory('errorInterceptor', ['alertsService', '$locatio
             if (rejection.status == -1 || rejection.status == 0) {
               break;
             }
-            alertsService.addError(rejection.data);
+            alertsService.addError(rejection.data && rejection.data.error || rejection.data);
             break;
         }
         return $q.reject(rejection);

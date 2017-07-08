@@ -35,11 +35,21 @@ export function employeeUpdate(_id, data) {
         delete data.processes;
         update.$unset = {processes: '1'};
     }
-    return Employees.updateOne(
+    return Employees.update(
         {_id},
         data
     );
 }
+
+export const removeEmployee = co.wrap(function* (_id) {
+    const child = yield Employees.findOne({parent: _id});
+
+    if (child) {
+        throw 'Орг звено имеет подчиненных';
+    }
+
+    return Employees.remove({_id});
+})
 
 export const cloneEmployee = co.wrap(function*(target, copyEmployee) {
     const targetParent = yield Employees.findById(target).lean();

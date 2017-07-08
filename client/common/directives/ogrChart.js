@@ -3,7 +3,7 @@
  */
 import angular from 'angular';
 
-function dir($state, $uibModal, copyPastService, alertsService) {
+function dir($state, $uibModal, copyPastService, alertsService, employeesService) {
     return {
         restrict: "E",
         scope: {
@@ -75,6 +75,17 @@ function dir($state, $uibModal, copyPastService, alertsService) {
                             }
                         });
                         $node.append(copyBtn);
+
+                        const removeBtn = $('<i>', {
+                            'class': 'fa fa-trash employee-btn employee-btn-remove',
+                            click: (e) => {
+                                e.stopPropagation();
+                                employeesService.remove({id: data._id}, function () {
+                                    $state.reload();
+                                });
+                            }
+                        });
+                        $node.append(removeBtn);
                     }
                 }
 
@@ -84,4 +95,4 @@ function dir($state, $uibModal, copyPastService, alertsService) {
     }
 }
 
-angular.module('common').directive('orgChart', ['$state', '$uibModal', 'copyPastService', 'alertsService', dir]);
+angular.module('common').directive('orgChart', ['$state', '$uibModal', 'copyPastService', 'alertsService', 'employeesService', dir]);
